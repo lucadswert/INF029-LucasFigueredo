@@ -17,4 +17,4 @@ int main()
 {
     int res = a - b - c;
     return res;
-}
+]
