@@ -4,7 +4,7 @@
 
 #define TAM_CPF 16
 #define TAM_NAC 12
-#define TAM_NOME 20
+#define TAM_NOME 30
 #define TAM_MAT 13
 
 struct Cad_Clientes{
@@ -26,8 +26,14 @@ int main( ){
 
   dadosCadastrados = scanDados();
   printf("\n");
-  printDados(dadosCadastrados);
-
+   for (int posicao = 0; posicao < quantMaxClientes; posicao++){
+     printf("==================================================\n");
+	   printf("Nome: %s\n", clientes[posicao].nome);
+	   printf("Nascimento: %s\n", clientes[posicao].nascimento);
+     printf("CPF: %s\n", clientes[posicao].cpf);
+     printf("Sexo: %c \n", clientes[posicao].sexo);
+     printf("==================================================\n");
+     }
 }
 
 Clientes scanDados(){
@@ -51,14 +57,3 @@ Clientes scanDados(){
   }
   return dados;
 }
-
-void printDados(Clientes dadosClientes){
-  for (int posicao = 0; posicao < quantMaxClientes; posicao++){
-    printf("==================================================\n");
-	printf("Nome: %s\n", clientes[posicao].nome);
-	printf("Nascimento: %s\n", clientes[posicao].nascimento);
-	printf("CPF: %s\n", clientes[posicao].cpf);
-    printf("Sexo: %c \n", clientes[posicao].sexo);
-    printf("==================================================\n");
-    }
-  }
