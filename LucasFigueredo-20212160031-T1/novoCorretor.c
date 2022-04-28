@@ -7,8 +7,8 @@
 //renomeie o arquivo do include abaixo para PrimeiroUltimoNomeMATRICULA.h
 #include "LucasFigueredo20212160031.h"
 
-void testQ1();
-void testQ2();
+void testQ1(); // Okay
+void testQ2(); //Problema no retorno
 void testQ3(); // Okay
 void testQ4(); // Okay
 void testQ5(); // Okay
@@ -55,134 +55,135 @@ void testQ1(){
 }
 
 void testQ2(){
-    char datainicial[11], datafinal[11];
+    char dataInicial[11], dataFinal[11];
     int qtdDias, qtdMeses, qtdAnos;
-    //DiasMesesAnos dma;
     int retorno;
+    DiasMesesAnos dma;
 
     //teste 1
     qtdDias = -1;
     qtdMeses = -1;
     qtdAnos = -1;
 printf("===========================\n");
-    strcpy(datainicial, "01/06/2015");
-    strcpy(datafinal, "01/06/2016");
-    q2(datainicial, datafinal);
-    printf("%d\n", retorno == 1);
-    printf("%d\n", qtdDias == 0);
-    printf("%d\n", qtdMeses == 0);
-    printf("%d\n", qtdAnos == 1);
+    strcpy(dataInicial, "01/06/2015");
+    strcpy(dataFinal, "01/06/2016");
+    dma = q2(dataInicial, dataFinal);
+    printf("%d\n", dma.retorno == 1);
+    printf("%d\n", dma.qtdDias == 0);
+    printf("%d\n", dma.qtdMeses == 0);
+    printf("%d\n", dma.qtdAnos == 1);
 
     //teste 2 - retornos
     qtdDias = -1;
     qtdMeses = -1;
     qtdAnos = -1;
 printf("===========================\n");
-    strcpy(datainicial,"01/30/2015");
-    strcpy(datafinal,"01/06/2016");
-    q2(datainicial, datafinal);
-    printf("%d\n",retorno == 2);
+    strcpy(dataInicial,"01/30/2015");
+    strcpy(dataFinal,"01/06/2016");
+    dma = q2(dataInicial, dataFinal);
+    printf("%d\n",dma.retorno == 2);
 printf("===========================\n");
-    strcpy(datainicial,"01/3/2015");
-    strcpy(datafinal,"40/06/2016");
-    q2(datainicial, datafinal);
-    printf("%d\n",retorno == 3);
+    strcpy(dataInicial,"01/3/2015");
+    strcpy(dataFinal,"40/06/2016");
+    dma = q2(dataInicial, dataFinal);
+    printf("%d\n",dma.retorno == 3);
 printf("===========================\n");
-    strcpy(datainicial,"01/06/2016");
-    strcpy(datafinal,"01/06/2015");
-    q2(datainicial, datafinal);
-    printf("%d\n",retorno == 4);
+    strcpy(dataInicial,"01/06/2016");
+    strcpy(dataFinal,"01/06/2015");
+    dma = q2(dataInicial, dataFinal);
+    printf("%d\n",dma.retorno == 4);
 
     //teste 3
     qtdDias = -1;
     qtdMeses = -1;
     qtdAnos = -1;
 printf("===========================\n");
-    strcpy(datainicial,"06/06/2017");
-    strcpy(datafinal,"07/07/2017");
-    q2(datainicial, datafinal);
-    printf("%d\n",retorno == 1);
-    printf("%d\n",qtdDias == 1);
-    printf("%d\n",qtdMeses == 1);
-    printf("%d\n",qtdAnos == 0);
+    strcpy(dataInicial,"06/06/2017");
+    strcpy(dataFinal,"07/07/2017");
+    dma = q2(dataInicial, dataFinal);
+    printf("%d\n",dma.retorno == 1);
+    printf("%d\n",dma.qtdDias == 1);
+    printf("%d\n",dma.qtdMeses == 1);
+    printf("%d\n",dma.qtdAnos == 0);
 
     //teste 4
     qtdDias = -1;
     qtdMeses = -1;
     qtdAnos = -1;
 printf("===========================\n");
-    strcpy(datainicial,"06/06/2017");
-    strcpy(datafinal,"05/07/2018");
-    q2(datainicial, datafinal);
-    printf("%d\n",retorno == 1);
-    printf("%d\n",qtdDias == 29);
-    printf("%d\n",qtdMeses == 0);
-    printf("%d\n",qtdAnos == 1);
+    strcpy(dataInicial,"06/06/2017");
+    strcpy(dataFinal,"05/07/2018");
+    dma = q2(dataInicial, dataFinal);
+    printf("%d\n",dma.retorno == 1);
+    printf("%d\n",dma.qtdDias == 29);
+    printf("%d\n",dma.qtdMeses == 0);
+    printf("%d\n",dma.qtdAnos == 1);
 
     //teste 5
     qtdDias = -1;
     qtdMeses = -1;
     qtdAnos = -1;
 printf("===========================\n");
-    strcpy(datainicial,"26/07/2017");
-    strcpy(datafinal,"25/08/2017");
-    q2(datainicial, datafinal);
-    printf("%d\n",retorno == 1);
-    printf("%d\n",qtdDias == 30);
-    printf("%d\n",qtdMeses == 0);
-    printf("%d\n",qtdAnos == 0);
+    strcpy(dataInicial,"26/07/2017");
+    strcpy(dataFinal,"25/08/2017");
+    dma = q2(dataInicial, dataFinal);
+    printf("%d\n",dma.retorno == 1);
+    printf("%d\n",dma.qtdDias == 30);
+    printf("%d\n",dma.qtdMeses == 0);
+    printf("%d\n",dma.qtdAnos == 0);
 
     //teste 6
     qtdDias = -1;
     qtdMeses = -1;
     qtdAnos = -1;
 printf("===========================\n");
-    strcpy(datainicial,"26/06/2017");
-    strcpy(datafinal,"26/07/2017");
-    q2(datainicial, datafinal);
-    printf("%d\n",retorno == 1);
-    printf("%d\n",qtdDias == 0);
-    printf("%d\n",qtdMeses == 1);
-    printf("%d\n",qtdAnos == 0);
+    strcpy(dataInicial,"26/06/2017");
+    strcpy(dataFinal,"26/07/2017");
+    dma = q2(dataInicial, dataFinal);
+    printf("%d\n",dma.retorno == 1);
+    printf("%d\n",dma.qtdDias == 0);
+    printf("%d\n",dma.qtdMeses == 1);
+    printf("%d\n",dma.qtdAnos == 0);
 
     //teste 8
     qtdDias = -1;
     qtdMeses = -1;
     qtdAnos = -1;
-printf("===========================\n");
-    strcpy(datainicial,"27/02/2016");
-    strcpy(datafinal,"03/03/2017");
-    q2(datainicial, datafinal);
-    printf("%d\n",retorno == 1);
-    printf("%d\n",qtdDias == 4);
-    printf("%d\n",qtdMeses == 0);
-    printf("%d\n",qtdAnos == 1);
+    printf("===========================\n");
+    strcpy(dataInicial,"27/02/2016");
+    strcpy(dataFinal,"03/03/2017");
+    dma = q2(dataInicial, dataFinal);
+    printf("%d\n",dma.retorno == 1);
+    printf("%d\n",dma.qtdDias == 4);
+    printf("%d\n",dma.qtdMeses == 0);
+    printf("%d\n",dma.qtdAnos == 1);
 
     //teste 9
     qtdDias = -1;
     qtdMeses = -1;
     qtdAnos = -1;
-printf("===========================\n");
-    strcpy(datainicial,"27/02/2015");
-    strcpy(datafinal,"03/03/2016");
-    q2(datainicial, datafinal);
-    printf("%d\n",retorno == 1);
-    printf("%d\n",qtdDias == 5);
-    printf("%d\n",qtdMeses == 0);
-    printf("%d\n",qtdAnos == 1);
+  printf("===========================\n");
+    strcpy(dataInicial,"27/02/2015");
+    strcpy(dataFinal,"03/03/2016");
+    dma = q2(dataInicial, dataFinal);
+    printf("%d\n",dma.retorno == 1);
+    printf("%d\n",dma.qtdDias == 5);
+    printf("%d\n",dma.qtdMeses == 0);
+    printf("%d\n",dma.qtdAnos == 1);
+
 
     //teste 10
     qtdDias = -1;
     qtdMeses = -1;
     qtdAnos = -1;
-  printf("===========================\n");
-    strcpy(datainicial,"28/01/2016");
-    strcpy(datafinal,"29/02/2016");
-    q2(datainicial, datafinal);
-    printf("%d\n",retorno == 1);
-    printf("%d\n",qtdDias == 1);
-    printf("%d\n",qtdMeses == 1);
-    printf("%d\n",qtdAnos == 0);
+    printf("===========================\n");
+    strcpy(dataInicial,"28/01/2016");
+    strcpy(dataFinal,"29/02/2016");
+    dma = q2(dataInicial, dataFinal);
+    printf("%d\n",dma.retorno == 1);
+    printf("%d\n",dma.qtdDias == 1);
+    printf("%d\n",dma.qtdMeses == 1);
+    printf("%d\n",dma.qtdAnos == 0);
 
 }
 
@@ -266,8 +267,6 @@ void testQ4(){
 
 
 }
-
-
 void testQ5(){
     printf("%d\n",q5(345) == 543);
     printf("%d\n",q5(78) == 87);

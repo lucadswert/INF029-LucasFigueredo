@@ -3,8 +3,15 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <stdbool.h>
-#define NASC 11
 #include "LucasFigueredo20212160031.h"
+#define NASC 11
+
+//  ----- Dados do Aluno -----
+//  Nome: Lucas Ribeiro Rocha Figueredo
+//  email: lucasr2103@gmail.com
+//  Matrícula: 20212160031
+//  Semestre: 2022.1
+
 int q1(char data[NASC]){
   int datavalida = 0;
   int Dia, Mes, Ano;
@@ -83,23 +90,25 @@ int q1(char data[NASC]){
   datavalida = 1;
   return datavalida;
 }
-int q2(char dataInicial[NASC], char dataFinal[NASC]){
+DiasMesesAnos q2(char dataInicial[NASC], char dataFinal[NASC]){
+  DiasMesesAnos dma;
+  int contDataI = 0, contDataF = 0;
   int DiaI, MesI, AnoI, DiaF, MesF, AnoF;
-  int qtdDias, qtdMeses, qtdAnos;
+  int qtdDias = 0, qtdMeses =0 , qtdAnos=0;
   char sDia[3],
        sMes[3],
        sAno[5],
        sDiaF[3],
        sMesF[3],
        sAnoF[5];
-  int i;
-  int retorno = 0;
+  int i, contErroI = 0, contErroF = 0, contErro;
   for (int c = 0; dataInicial[c] != '\0'; c++)
    if( dataInicial[c] < '/' || dataInicial[c] > '9'){
-    	return 0;}
+       contErroI++;}
   for (int d = 0; dataFinal[d] != '\0'; d++)
    if( dataFinal[d] < '/' || dataFinal[d] > '9'){
-    	return 0;}
+    	contErroI++;}
+  
   //Validar Data Inicial
   for( i = 0; dataInicial[i] != '/'; i++){
     sDia[i] = dataInicial[i];
@@ -108,7 +117,7 @@ int q2(char dataInicial[NASC], char dataFinal[NASC]){
     sDia[i] = '\0';
   }
   else{
-    return 0;
+    contErroI++;
   }
   int j = i + 1;
   i = 0;
@@ -122,7 +131,7 @@ int q2(char dataInicial[NASC], char dataFinal[NASC]){
     sMes[i] = '\0';
   }
   else{
-    return 0;
+    contErroI++;
   }
   j = j + 1;
   i = 0;
@@ -137,27 +146,28 @@ int q2(char dataInicial[NASC], char dataFinal[NASC]){
     sAno[i] = '\0';
   }
   else{
-    return 0;
+    contErroI++;
     }
     DiaI = atoi(sDia);
     MesI = atoi(sMes);
     AnoI = atoi(sAno);
 
     if (MesI < 0 || MesI > 12){
-            return 0;
+           contErroI++;
     }
     if (DiaI < 0 || DiaI > 31){
-            return 0;
+            contErroI++;
     }
     if(DiaI > 0 && DiaI < 32 && MesI > 0 && MesI < 13){
         if( ( MesI == 4 || MesI == 6 || MesI == 9 || MesI == 11 ) && (DiaI > 30)  ){
-            return 0;}}
+            contErroI++;}}
             if(AnoI%4==0 && (AnoI%100!=0 || AnoI%400==0)){
                 if ((MesI == 2) && DiaI > 29){
-                    return 0;}}
+                    contErroI++;}}
                     else{
                         if ((MesI == 2) && (DiaI > 28)){
-                        return 0;}}
+                        contErroI++;}}
+  contDataI = 1;
   //Validar Data Final
   for( i = 0; dataFinal[i] != '/'; i++){
     sDiaF[i] = dataFinal[i];
@@ -166,7 +176,7 @@ int q2(char dataInicial[NASC], char dataFinal[NASC]){
     sDiaF[i] = '\0';
   }
   else{
-    return 0;
+    contErroF++;
   }
   j = i + 1;
   i = 0;
@@ -180,7 +190,7 @@ int q2(char dataInicial[NASC], char dataFinal[NASC]){
     sMesF[i] = '\0';
   }
   else{
-    return 0;
+    contErroF++;
   }
   j = j + 1;
   i = 0;
@@ -195,27 +205,30 @@ int q2(char dataInicial[NASC], char dataFinal[NASC]){
     sAnoF[i] = '\0';
   }
   else{
-    return 0;
+    contErroF++;
     }
     DiaF = atoi(sDiaF);
     MesF = atoi(sMesF);
     AnoF = atoi(sAnoF);
 
     if (MesF < 0 || MesF > 12){
-            return 0;
+           contErroF++;
     }
     if (DiaF < 0 || DiaF > 31){
-            return 0;
+           contErroF++;
     }
     if(DiaF > 0 && DiaF < 32 && MesF > 0 && MesF < 13){
         if( ( MesF == 4 || MesF == 6 || MesF == 9 || MesF == 11 ) && (DiaF > 30)  ){
-            return 0;}}
+            contErroF++;}}
             if(AnoF%4==0 && (AnoF%100!=0 || AnoF%400==0)){
                 if ((MesF == 2) && DiaF > 29){
-                    return 0;}}
+                    contErroF++;}}
                     else{
                         if ((MesF == 2) && (DiaF > 28)){
-                        return 0;}}
+                        contErroF++;}}
+    if (AnoI > AnoF){
+    contErro++;
+    }
     if(DiaF < DiaI)
     {
         if (MesF == 3)
@@ -246,19 +259,25 @@ int q2(char dataInicial[NASC], char dataFinal[NASC]){
         MesF += 12;
         AnoF -= 1;
     }
-  if (AnoI > AnoF){
-    return 0;
-  }
+  contDataF = 1;
+    dma.qtdDias = DiaF - DiaI;
+    dma.qtdMeses = MesF - MesI;
+    dma.qtdAnos = AnoF - AnoI;
   
-    qtdDias = DiaF - DiaI;
-    qtdMeses = MesF - MesI;
-    qtdAnos = AnoF - AnoI;
-    retorno = 1;
-    printf("Retorno %d\n", retorno);
-    printf("Dias: %d\n", qtdDias);
-    printf("Meses: %d\n", qtdMeses);
-    printf("Anos: %d\n", qtdAnos);
-    return retorno;
+    if (contErroI > 0){
+      dma.retorno = 2;
+      return dma;
+    }else if (contErroF > 0){
+      dma.retorno = 3;
+      return dma;
+    }else if (AnoI > AnoF){
+      dma.retorno = 4;
+      return dma;
+      }else{
+      dma.retorno = 1;
+      return dma;
+      }
+  
 }
 int q3(char* texto, char c, int isCaseSensitive){
     int qtdOcorrencias;
