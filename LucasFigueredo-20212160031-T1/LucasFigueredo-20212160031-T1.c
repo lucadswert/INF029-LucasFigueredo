@@ -3,39 +3,21 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <stdbool.h>
-#define NASC 12
+#define NASC 11
 #include "LucasFigueredo20212160031.h"
-/*int main()
-{
-    //q1(data);
-    //q2(dataInicial, dataFinal);
-    //q3(texto, c, isCaseSensitive);
-    //q4( strTexto, strBusca, posicoes);
-    //q5(num);
-    //q6(numerobase, numerobusca);
-    return 0;
-
-}*/
-int q1(char* data){
-  validaDataQ1(data);
-
-  if (datavalida == 1){
-    //printf("%d\n", datavalida);
-    return 1;
-  }
-  else{
-    printf("%d\n", datavalida);
-    return 0;
-  }
-}
-int validaDataQ1(char *data){
+int q1(char data[NASC]){
+  int datavalida = 0;
   int Dia, Mes, Ano;
   char sDia[3],
        sMes[3],
        sAno[5];
   int i;
-
-  validaCaracData(data);
+  
+  //Validar Caracteres//
+  for (int c = 0; data[c] != '\0'; c++)
+   if( data[c] < '/' || data[c] > '9'){
+     //puts("Erro caractere;");
+    	return 0;}
 
   for( i = 0; data[i] != '/'; i++){
     sDia[i] = data[i];
@@ -66,7 +48,7 @@ int validaDataQ1(char *data){
   i = 0;
 
 //Processo para quebrar o ano//
-  for( ; data[j] != '\n'; j++){
+  for( ; data[j] != '\0'; j++){
     sAno[i] = data[j];
     i++;
   }
@@ -98,33 +80,12 @@ int validaDataQ1(char *data){
                     else{
                         if (Mes == 2 && Dia > 28){
                         return 0;}}
-    datavalida = 1;
-    return datavalida;
+  datavalida = 1;
+  return datavalida;
 }
-int validaCaracData (char* data){
-for (int c = 0; data[c] != '\n'; c++)
-   if( data[c] < '/' || data[c] > '9'){
-    	return 0;}
-    return 1;
-}
-int q2(char* dataInicial, char* datataFinal){
-  int retorno = 1;
-  //fgets(dataInicial, NASC, stdin);
-  //fgets(dataFinal, NASC, stdin);
-  validaDataQ2(dataInicial, dataFinal);
-if (datavalida == 1){
-    return 1;
-  }
-  else{
-    retorno++;
-    printf("%d", retorno);
-    return 0;
-  }
-}
-int validaDataQ2(char *dataInicial, char *dataFinal){
-  datavalida = 0;
+int q2(char dataInicial[NASC], char dataFinal[NASC]){
   int DiaI, MesI, AnoI, DiaF, MesF, AnoF;
-  int qtdDias, qtdMeses, qtdAnos, retorno;
+  int qtdDias, qtdMeses, qtdAnos;
   char sDia[3],
        sMes[3],
        sAno[5],
@@ -132,10 +93,13 @@ int validaDataQ2(char *dataInicial, char *dataFinal){
        sMesF[3],
        sAnoF[5];
   int i;
-
-  validaCaracData(dataInicial);
-  validaCaracData(dataFinal);
-
+  int retorno = 0;
+  for (int c = 0; dataInicial[c] != '\0'; c++)
+   if( dataInicial[c] < '/' || dataInicial[c] > '9'){
+    	return 0;}
+  for (int d = 0; dataFinal[d] != '\0'; d++)
+   if( dataFinal[d] < '/' || dataFinal[d] > '9'){
+    	return 0;}
   //Validar Data Inicial
   for( i = 0; dataInicial[i] != '/'; i++){
     sDia[i] = dataInicial[i];
@@ -154,19 +118,17 @@ int validaDataQ2(char *dataInicial, char *dataFinal){
     sMes[i] = dataInicial[j];
     i++;
   }
-
   if (i == 1 || i == 2){
     sMes[i] = '\0';
   }
   else{
     return 0;
   }
-
   j = j + 1;
   i = 0;
 
 //Processo para quebrar o ano//
-  for( ; dataInicial[j] != '\n'; j++){
+  for( ; dataInicial[j] != '\0'; j++){
     sAno[i] = dataInicial[j];
     i++;
   }
@@ -177,7 +139,6 @@ int validaDataQ2(char *dataInicial, char *dataFinal){
   else{
     return 0;
     }
-
     DiaI = atoi(sDia);
     MesI = atoi(sMes);
     AnoI = atoi(sAno);
@@ -188,81 +149,73 @@ int validaDataQ2(char *dataInicial, char *dataFinal){
     if (DiaI < 0 || DiaI > 31){
             return 0;
     }
-
-    if(  DiaI > 0 && DiaI <= 31 && MesI > 0 && MesI <= 12){
-        if( ( MesI == 4 || MesI == 6 || MesI == 9 || MesI == 11 ) && DiaI > 30  ){
+    if(DiaI > 0 && DiaI < 32 && MesI > 0 && MesI < 13){
+        if( ( MesI == 4 || MesI == 6 || MesI == 9 || MesI == 11 ) && (DiaI > 30)  ){
             return 0;}}
             if(AnoI%4==0 && (AnoI%100!=0 || AnoI%400==0)){
                 if ((MesI == 2) && DiaI > 29){
                     return 0;}}
                     else{
-                        if (MesI == 2 && DiaI > 28){
+                        if ((MesI == 2) && (DiaI > 28)){
                         return 0;}}
-
   //Validar Data Final
-  int c;
-  for( c = 0; dataFinal[c] != '/'; c++){
-    sDiaF[c] = dataFinal[c];
+  for( i = 0; dataFinal[i] != '/'; i++){
+    sDiaF[i] = dataFinal[i];
   }
-  if (c == 1 || c == 2){
-    sDiaF[c] = '\0';
+  if (i == 1 || i == 2){
+    sDiaF[i] = '\0';
   }
   else{
     return 0;
   }
-  int k = c + 1;
-  c = 0;
+  j = i + 1;
+  i = 0;
 
 //Processo para quebrar o mês//
-  for( ; dataFinal[k] != '/'; k++){
-    sMesF[c] = dataFinal[k];
-    c++;
+  for( ; dataFinal[j] != '/'; j++){
+    sMesF[i] = dataFinal[j];
+    i++;
   }
-
-  if (c == 1 || c == 2){
-    sMesF[c] = '\0';
+  if (i == 1 || i == 2){
+    sMesF[i] = '\0';
   }
   else{
     return 0;
   }
-
-  k = k + 1;
-  c = 0;
+  j = j + 1;
+  i = 0;
 
 //Processo para quebrar o ano//
-  for( ; dataFinal[k] != '\n'; k++){
-    sAnoF[c] = dataFinal[k];
-    c++;
+  for( ; dataFinal[j] != '\0'; j++){
+    sAnoF[i] = dataFinal[j];
+    i++;
   }
 
-  if (c == 2 || c == 4){
-    sAnoF[c] = '\0';
+  if (i == 2 || i == 4){
+    sAnoF[i] = '\0';
   }
   else{
     return 0;
     }
-
     DiaF = atoi(sDiaF);
     MesF = atoi(sMesF);
     AnoF = atoi(sAnoF);
 
-  if (MesF < 0 || MesF > 12){
+    if (MesF < 0 || MesF > 12){
             return 0;
     }
     if (DiaF < 0 || DiaF > 31){
             return 0;
     }
-
-    if(  DiaF > 0 && DiaF <= 31 && MesF > 0 && MesF <= 12){
-        if( ( MesF == 4 || MesF == 6 || MesF == 9 || MesF == 11 ) && DiaF > 30  ){
+    if(DiaF > 0 && DiaF < 32 && MesF > 0 && MesF < 13){
+        if( ( MesF == 4 || MesF == 6 || MesF == 9 || MesF == 11 ) && (DiaF > 30)  ){
             return 0;}}
             if(AnoF%4==0 && (AnoF%100!=0 || AnoF%400==0)){
                 if ((MesF == 2) && DiaF > 29){
                     return 0;}}
                     else{
-                        if (MesF == 2 && DiaF > 28){
+                        if ((MesF == 2) && (DiaF > 28)){
                         return 0;}}
-
     if(DiaF < DiaI)
     {
         if (MesF == 3)
@@ -293,18 +246,19 @@ int validaDataQ2(char *dataInicial, char *dataFinal){
         MesF += 12;
         AnoF -= 1;
     }
-    datavalida = 1;
-
-    retorno = datavalida;
+  if (AnoI > AnoF){
+    return 0;
+  }
+  
     qtdDias = DiaF - DiaI;
     qtdMeses = MesF - MesI;
     qtdAnos = AnoF - AnoI;
-    printf("%d\n", retorno);
-    printf("%d\n", qtdDias);
-    printf("%d\n", qtdMeses);
-    printf("%d\n", qtdAnos);
-
-    return datavalida;
+    retorno = 1;
+    printf("Retorno %d\n", retorno);
+    printf("Dias: %d\n", qtdDias);
+    printf("Meses: %d\n", qtdMeses);
+    printf("Anos: %d\n", qtdAnos);
+    return retorno;
 }
 int q3(char* texto, char c, int isCaseSensitive){
     int qtdOcorrencias;
@@ -367,10 +321,6 @@ int q6(int numerobase, int numerobusca){
     int  i = 0, invertido, busca, contDig = 0;
     int digNum[11] = {0}, digBusca[11]={0};
 
-    //scanf("%i", &numerobase);
-    //scanf("%i", &numerobusca);
-    printf("Numero busca: %d\n", numerobusca);
-    printf("Numero base: %d\n", numerobase);
     for (;numerobase != 0;){
     qtdOcorrencias = 0;
         digNum[i] = numerobase % 10;
@@ -413,6 +363,5 @@ int q6(int numerobase, int numerobusca){
             }
           }
         }
-  printf("Qtd: %d\n", qtdOcorrencias);
     return qtdOcorrencias;
 }
