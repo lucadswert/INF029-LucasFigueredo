@@ -254,7 +254,7 @@ int modificarTamanhoEstruturaAuxiliar(int posicao, int novoTamanho){
         }else{
             while(aux!= NULL){
                 if(aux ->valido){
-                    validade = inserirNumeroEmEstrutura(posicao +1,aux ->conteudo);
+                    validade = inserirNumeroEmEstrutura(posicao +1,aux->conteudo);
                     if(validade!=SUCESSO){
                         retorno = validade;
                         aux = NULL;
@@ -288,12 +288,6 @@ No *montarListaEncadeadaComCabecote(){
 }
 
 void destruirListaEncadeadaComCabecote(No **inicio){
-   /* No* destruir = *inicio;
-    while(destruir != NULL){
-        No * t = destruir->prox;
-        free(destruir);
-        destruir = t;
-    }*/
     *inicio = NULL;
 }
 
@@ -344,7 +338,7 @@ int existeEspaco(int posicao){
     Vetor* l = vetorPrincipal[posicao];
     while(l != NULL){
         if(l->valido == 0){
-            retorno =1;
+            retorno = 1;
             break;
         }
         l = l->prox;
@@ -394,7 +388,7 @@ void ordenaVetor(int vetor[], int tamanho) {
     int j = i - 1;
     while (chave < vetor[j] && j >= 0) {
       vetor[j + 1] = vetor[j];
-      --j;
+      j--;
     }
     vetor[j + 1] = chave;
   }
