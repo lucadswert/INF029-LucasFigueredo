@@ -89,9 +89,8 @@ int excluirNumeroDoFinaldaEstrutura(int posicao){
 }
 
 int excluirNumeroEspecificoDeEstrutura(int posicao, int valor){
-
-    posicao = posicao - 1;
     int retorno = 0;
+    posicao = posicao - 1;
 
     if(posicao<0 || posicao>9){
         retorno = POSICAO_INVALIDA;
@@ -103,16 +102,6 @@ int excluirNumeroEspecificoDeEstrutura(int posicao, int valor){
         }else{
             if(buscaValor(vetorPrincipal[posicao],valor)){
                 vetorPrincipal[posicao] = removeElemento(vetorPrincipal[posicao],valor);
-                Vetor* anterior = NULL;
-                Vetor* busca = vetorPrincipal[posicao];
-                Vetor* novo = (Vetor*) malloc(sizeof(Vetor));
-                while(busca != NULL){
-                    anterior = busca;
-                    busca = busca->prox;
-                }
-                novo->valido = 0;
-                novo->prox = NULL;
-                anterior->prox = novo;
                 retorno = SUCESSO;
             }else{
                 retorno = NUMERO_INEXISTENTE;
@@ -123,8 +112,7 @@ int excluirNumeroEspecificoDeEstrutura(int posicao, int valor){
 }
 
 int getDadosEstruturaAuxiliar(int posicao, int vetorAux[]){
-    int retorno = 0;
-    int i = 0;
+    int retorno = 0, i = 0;
     posicao = posicao - 1;
     if(posicao < 0 || posicao > 9){
         retorno = POSICAO_INVALIDA;
@@ -132,11 +120,8 @@ int getDadosEstruturaAuxiliar(int posicao, int vetorAux[]){
         retorno = SEM_ESTRUTURA_AUXILIAR;
     }else{
         Vetor* aux = vetorPrincipal[posicao];
-        while(aux !=NULL){
-            if(aux->valido == 1){
-                vetorAux[i] = aux->conteudo;
-                i++;
-            }
+        for(; aux != NULL && aux->valido == 1; i++){
+            vetorAux[i] = aux->conteudo;
             aux = aux->prox;
         }
         retorno = SUCESSO;
@@ -145,36 +130,32 @@ int getDadosEstruturaAuxiliar(int posicao, int vetorAux[]){
 }
 
 int getDadosOrdenadosEstruturaAuxiliar(int posicao, int vetorAux[]){
-    int retorno = 0;
+    int retorno;
     retorno = getDadosEstruturaAuxiliar(posicao, vetorAux);
-    if(retorno == SUCESSO){
-        ordenaVetor(vetorAux, getQuantidadeElementosEstruturaAuxiliar(posicao));
+    if(retorno != SUCESSO){
+      return retorno;
     }
+    ordenaVetor(vetorAux, getQuantidadeElementosEstruturaAuxiliar(posicao));
     return retorno;
 }
 
 int getDadosDeTodasEstruturasAuxiliares(int vetorAux[]){
-    int retorno = 0;
-    int i = 0;
-    int j = 0;
+    int retorno = 0, i = 0, j = 0;
     while(j < 10){
         Vetor* aux = vetorPrincipal[j];
         if(vetorPrincipal[j] != NULL){
-            while(aux !=NULL){
-                if(aux->valido){
-                    vetorAux[i] = aux->conteudo;
-                    i++;
-                }
+            for(;aux !=NULL && aux->valido; i++){
+                vetorAux[i] = aux->conteudo;
                 aux = aux->prox;
             }
         }
         j++;
     }
-    if(i>0){
-        retorno = SUCESSO;
-    }else{
+    if(i<1){
         retorno = TODAS_ESTRUTURAS_AUXILIARES_VAZIAS;
+        return retorno;
     }
+    retorno = SUCESSO;
     return retorno;
 }
 
@@ -203,10 +184,7 @@ int getQuantidadeElementosEstruturaAuxiliar(int posicao){
         retorno = SEM_ESTRUTURA_AUXILIAR;
     }else{
         Vetor* l = vetorPrincipal[posicao];
-        while(l!=NULL){
-            if(l->valido){
-                quantidade++;
-            }
+        for(;l!=NULL && l->valido; quantidade++){
             l = l->prox;
         }
         retorno = quantidade;
@@ -217,22 +195,19 @@ int getQuantidadeElementosEstruturaAuxiliar(int posicao){
 void getDadosListaEncadeadaComCabecote(No *inicio, int vetorAux[]){
     No* dados = inicio;
     int i = 0;
-    while(dados!=NULL){
+    for(;dados!=NULL; i++){
         vetorAux[i] = dados->conteudo;
         dados = dados->prox;
-        i++;
     }
 }
 
 int modificarTamanhoEstruturaAuxiliar(int posicao, int novoTamanho){
-    int retorno = 0;
-    int validade = 0;
-    int tamVetAntes = 0;
+    int retorno = 0, validade = 0, tamVetAntes = 0;
     posicao = posicao - 1;
-    Vetor * l = vetorPrincipal[posicao];
-    for(;l!=NULL;){
-        l= l->prox;
-        tamVetAntes++;
+  
+    Vetor* l = vetorPrincipal[posicao];
+    for(;l!=NULL; tamVetAntes++){
+        l = l->prox;
     }
     novoTamanho = tamVetAntes + novoTamanho;
 
@@ -243,7 +218,7 @@ int modificarTamanhoEstruturaAuxiliar(int posicao, int novoTamanho){
     }else if(vetorPrincipal[posicao] == NULL){
         retorno = SEM_ESTRUTURA_AUXILIAR;
     }else{
-        Vetor * aux = vetorPrincipal[posicao];
+        Vetor* aux = vetorPrincipal[posicao];
         vetorPrincipal[posicao] = NULL;
         for(int i = 0; i<novoTamanho ;i++){
             vetorPrincipal[posicao] = criar_lista(vetorPrincipal[posicao]);
@@ -254,7 +229,7 @@ int modificarTamanhoEstruturaAuxiliar(int posicao, int novoTamanho){
         }else{
             while(aux!= NULL){
                 if(aux ->valido){
-                    validade = inserirNumeroEmEstrutura(posicao +1,aux->conteudo);
+                    validade = inserirNumeroEmEstrutura(++posicao,aux->conteudo);
                     if(validade!=SUCESSO){
                         retorno = validade;
                         aux = NULL;
@@ -273,15 +248,15 @@ int modificarTamanhoEstruturaAuxiliar(int posicao, int novoTamanho){
 
 No *montarListaEncadeadaComCabecote(){
     No* lista = NULL;
-    int tamanho = 0;
+    int tamanho;
     for(int i = 0; i < 10; i++){
         if(vetorPrincipal[i] != NULL){
-            tamanho = tamanho + getQuantidadeElementosEstruturaAuxiliar(i+1);
+            tamanho = tamanho + getQuantidadeElementosEstruturaAuxiliar(++i);
         }
     }
-    int vetor[tamanho];
+    int vetor[--tamanho];
     int aux = getDadosDeTodasEstruturasAuxiliares(vetor);
-    for(int i = tamanho - 1 ; i > -1 ; i--){
+    for(int i = tamanho; i > -1 ; i--){
         lista = inserir_lista_cabecote(lista,vetor[i]);
     }
     return lista;
@@ -292,7 +267,7 @@ void destruirListaEncadeadaComCabecote(No **inicio){
 }
 
 No* inserir_lista_cabecote(No* no , int i){
-    No* novo = (No*)malloc(sizeof(No));
+  No* novo = (No*)malloc(sizeof(No));
 	novo->conteudo = i;
 	novo->prox = no;
 	return novo;
@@ -317,16 +292,16 @@ void finalizar(){
 
 Vetor* criar_lista(Vetor *l){
     Vetor* novo = (Vetor*) malloc(sizeof(Vetor));
-    novo ->valido = 0;
-    novo ->prox = l;
+    novo->valido = 0;
+    novo->prox = l;
     return novo;
 }
 
 void inserir_elemento(Vetor *l, int numero){
     while(l != NULL){
         if(l->valido == 0){
-            l ->conteudo = numero;
-            l -> valido = 1;
+            l->conteudo = numero;
+            l->valido = 1;
             break;
         }
         l = l->prox;
@@ -336,42 +311,34 @@ void inserir_elemento(Vetor *l, int numero){
 int existeEspaco(int posicao){
     int retorno = 0;
     Vetor* l = vetorPrincipal[posicao];
-    while(l != NULL){
+    for(; l != NULL; l = l->prox){
         if(l->valido == 0){
             retorno = 1;
             break;
         }
-        l = l->prox;
     }
     return retorno;
 }
 
 int buscaValor(Vetor* l, int v){
-    Vetor* p = l;
-    while(p!= NULL){
-        if(p->conteudo == v){
-                return 1;}
-
-        else{
-            return 0;
-        }
-    }
-    return 0;
+    while(l->conteudo != v){
+         return 0;
+      }
+      return 1;
 }
 
-Vetor* removeElemento(Vetor* l,int v){
-    Vetor* busca;
+Vetor* removeElemento(Vetor* l,int v){  
+    Vetor* busca = l;
     Vetor* anterior = NULL;
-    busca = l;
-
-    while(busca != NULL){
+  
+    while(busca != NULL ){
         if(busca->conteudo == v){
            if (anterior != NULL){
-				anterior->prox = busca -> prox;
-				return l;
+      				anterior->prox = busca->prox;
+      				return l;
         }else{
-        l = busca->prox;
-        return l;
+            l = busca->prox;
+            return l;
     }
     free(l);
     break;
